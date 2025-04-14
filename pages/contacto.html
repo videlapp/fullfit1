@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - FullFit</title>
+    <!-- Metadatos para SEO -->
+    <meta name="description" content="Contacta con FullFit para resolver tus dudas sobre nuestros productos fitness. Estamos aquí para ayudarte con tu compra.">
+    <meta name="keywords" content="contacto fitness, atención cliente, FullFit contacto, soporte compras">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Animate.css para animaciones adicionales -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/icons/favicon.png">
+</head>
+<body>
+    <!-- Navbar (el mismo que tienes en las otras páginas) -->
+    <!-- Navbar Mejorado -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <i class="fas fa-dumbbell me-2"></i>
+                <span>FullFit</span>
+            </a>
+
+            <!-- Buscador en Navbar -->
+            <form class="d-none d-md-flex mx-auto" onsubmit="return false;">
+                <div class="input-group nav-search">
+                    <input type="search" 
+                           class="form-control form-control-sm" 
+                           placeholder="Buscar productos..." 
+                           id="navbarSearch"
+                           aria-label="Buscar">
+                    <button class="btn btn-sm btn-primary" type="button" onclick="handleNavbarSearch()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="productos.html">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contacto.html">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="#" id="cartButton">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cartCount" class="cart-badge badge rounded-pill bg-danger">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Modal del Carrito Mejorado -->
+    <div class="modal fade" id="cartModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-shopping-cart me-2"></i>
+                        Carrito de Compras
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Estado del carrito vacío -->
+                    <div id="emptyCart" class="text-center py-5" style="display: none;">
+                        <i class="fas fa-shopping-cart fa-4x text-muted mb-3"></i>
+                        <h4 class="text-muted">Tu carrito está vacío</h4>
+                        <p>¡Agrega algunos productos para comenzar!</p>
+                        <a href="productos.html" class="btn btn-primary">
+                            Ir a Productos
+                        </a>
+                    </div>
+
+                    <!-- Contenido del carrito -->
+                    <div id="cartContent">
+                        <div class="table-responsive">
+                            <table class="table align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Precio</th>
+                                        <th>Cantidad</th>
+                                        <th>Subtotal</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cartItems">
+                                    <!-- Los items se insertarán aquí -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Resumen del carrito -->
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" placeholder="Código de descuento">
+                                            <button class="btn btn-outline-secondary" type="button">Aplicar</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="text-end">
+                                            <p class="mb-1">Subtotal: $<span id="cartSubtotal">0.00</span></p>
+                                            <p class="mb-1">Envío: $<span id="cartShipping">0.00</span></p>
+                                            <h4 class="mt-2">Total: $<span id="cartTotal">0.00</span></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left me-2"></i>Seguir Comprando
+                    </button>
+                    <button type="button" class="btn btn-primary" id="checkoutButton">
+                        <i class="fas fa-check me-2"></i>Finalizar Compra
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Header de Contacto Mejorado -->
+    <header class="contact-header py-5" style="background-image: url('https://images.unsplash.com/photo-1576678927484-cc907957088c?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80'); background-size: cover; background-position: center; position: relative; min-height: 550px; display: flex; align-items: center;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255, 68, 68, 0.9) 0%, rgba(0, 0, 0, 0.8) 100%);"></div>
+        <div class="container position-relative">
+            <div class="row">
+                <div class="col-lg-8 mx-auto" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="text-center mb-4">
+                        <span class="badge bg-light text-danger px-4 py-2 mb-3 fs-6 fw-bold" style="border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">CONECTA CON NOSOTROS</span>
+                    </div>
+                    <h1 class="display-3 text-white fw-bold mb-4 text-center" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.4);">¿Cómo Podemos Ayudarte?</h1>
+                    <p class="lead text-white mb-5 opacity-90 text-center px-3" style="font-size: 1.3rem; text-shadow: 1px 1px 4px rgba(0,0,0,0.5);">
+                        Estamos comprometidos a responder tus consultas y brindarte el mejor asesoramiento para que alcances tus objetivos fitness.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 justify-content-center">
+                        <a href="#contact-form" class="btn btn-light btn-lg px-4" style="border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                            <i class="fas fa-envelope me-2"></i>Enviar Mensaje
+                        </a>
+                        <a href="https://wa.me/542615750410" target="_blank" class="btn btn-success btn-lg px-4" style="border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                            <i class="fab fa-whatsapp me-2"></i>WhatsApp Directo
+                        </a>
+                        <a href="mailto:fullfitmdz@gmail.com" class="btn btn-danger btn-lg px-4" style="border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                            <i class="far fa-envelope me-2"></i>Email Directo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sección de Contacto -->
+    <section class="contact-section py-5" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-10 text-center">
+                    <h2 class="mb-4 fw-bold" style="color: #333;" data-aos="fade-up">Estamos a un mensaje de distancia</h2>
+                    <p class="lead text-muted mb-0" data-aos="fade-up" data-aos-delay="100">Nuestro equipo está listo para responder todas tus dudas y ayudarte a encontrar los productos perfectos para tus objetivos.</p>
+                </div>
+            </div>
+            
+            <div class="row g-5">
+                <!-- Información de Contacto -->
+                <div class="col-lg-4">
+                    <div class="contact-info h-100" data-aos="fade-up">
+                        <div class="contact-card" style="border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-top: 5px solid var(--primary-color);">
+                            <div class="contact-card-body p-4">
+                                <h3 class="contact-title mb-4" style="color: #333; font-weight: 700; position: relative; padding-bottom: 15px;">
+                                    Información de Contacto
+                                    <span style="position: absolute; bottom: 0; left: 0; width: 50px; height: 3px; background: var(--primary-color);"></span>
+                                </h3>
+                                
+                                <div class="contact-item d-flex align-items-center p-3 mb-3" style="background: #f8f9fa; border-radius: 10px; transition: all 0.3s ease;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--primary-color); display: flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0;">
+                                        <i class="fas fa-phone text-white"></i>
+                                    </div>
+                                    <div class="contact-details">
+                                        <h4 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 3px; color: #444;">Teléfono</h4>
+                                        <a href="tel:2615750410" style="text-decoration: none; color: #666; font-weight: 500; transition: all 0.3s ease;">+54 261 575-0410</a>
+                                    </div>
+                                </div>
+
+                                <div class="contact-item d-flex align-items-center p-3 mb-3" style="background: #f8f9fa; border-radius: 10px; transition: all 0.3s ease;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--primary-color); display: flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0;">
+                                        <i class="fas fa-envelope text-white"></i>
+                                    </div>
+                                    <div class="contact-details">
+                                        <h4 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 3px; color: #444;">Email</h4>
+                                        <a href="mailto:fullfitmdz@gmail.com" style="text-decoration: none; color: #666; font-weight: 500; transition: all 0.3s ease; word-break: break-all;">fullfitmdz@gmail.com</a>
+                                    </div>
+                                </div>
+
+                                <div class="contact-item d-flex align-items-center p-3 mb-4" style="background: #f8f9fa; border-radius: 10px; transition: all 0.3s ease;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--primary-color); display: flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0;">
+                                        <i class="fab fa-instagram text-white"></i>
+                                    </div>
+                                    <div class="contact-details">
+                                        <h4 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 3px; color: #444;">Instagram</h4>
+                                        <a href="https://instagram.com/fullfit.mdz" target="_blank" style="text-decoration: none; color: #666; font-weight: 500; transition: all 0.3s ease;">@fullfit.mdz</a>
+                                    </div>
+                                </div>
+
+                                <div style="background: linear-gradient(135deg, #25D366, #128C7E); color: white; padding: 2rem; border-radius: 10px; text-align: center; margin-top: 2rem;">
+                                    <i class="fab fa-whatsapp mb-3" style="font-size: 3rem;"></i>
+                                    <h4 style="font-size: 1.4rem; font-weight: 600; margin-bottom: 1rem;">Atención inmediata por WhatsApp</h4>
+                                    <p class="mb-4" style="opacity: 0.9;">Respuesta garantizada en menos de 1 hora</p>
+                                    <a href="https://wa.me/542615750410" target="_blank" class="btn btn-light btn-lg px-4 fw-bold" style="border-radius: 30px; color: #25D366; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                                        Chatear ahora
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulario -->
+                <div class="col-lg-8">
+                    <div class="contact-form" data-aos="fade-up" id="contact-form" style="background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 3rem; position: relative; overflow: hidden;">
+                        <!-- Elemento decorativo superior -->
+                        <div style="position: absolute; top: 0; right: 0; width: 150px; height: 150px; background: var(--primary-color); opacity: 0.1; border-radius: 0 0 0 100%;"></div>
+                        <!-- Elemento decorativo inferior -->
+                        <div style="position: absolute; bottom: 0; left: 0; width: 100px; height: 100px; background: var(--primary-color); opacity: 0.05; border-radius: 0 100% 0 0;"></div>
+                        
+                        <h3 style="color: #333; font-weight: 700; position: relative; padding-bottom: 15px; margin-bottom: 30px;">
+                            Envíanos un mensaje
+                            <span style="position: absolute; bottom: 0; left: 0; width: 50px; height: 3px; background: var(--primary-color);"></span>
+                        </h3>
+                        
+                        <form action="https://formsubmit.co/70adfbb88e1b08fe1eeada50f58da2a7" method="POST">
+                            <!-- Configuraciones de FormSubmit -->
+                            <input type="hidden" name="_captcha" value="false">
+                            <input type="hidden" name="_subject" value="Nuevo mensaje de contacto - FullFit">
+                            <input type="hidden" name="_template" value="table">
+                            <input type="hidden" name="_next" value="../gracias.html">
+                            
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="form-group position-relative">
+                                        <label for="nombre" style="font-weight: 500; color: #555; margin-bottom: 8px;">Nombre completo</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text" style="background: transparent;"><i class="fas fa-user text-muted"></i></span>
+                                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Escribe tu nombre" required 
+                                                style="padding: 12px 15px; border-radius: 0 8px 8px 0; border: 1px solid #ddd; transition: all 0.3s ease;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group position-relative">
+                                        <label for="email" style="font-weight: 500; color: #555; margin-bottom: 8px;">Email de contacto</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text" style="background: transparent;"><i class="fas fa-envelope text-muted"></i></span>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Escribe tu email" required
+                                                style="padding: 12px 15px; border-radius: 0 8px 8px 0; border: 1px solid #ddd; transition: all 0.3s ease;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group position-relative">
+                                        <label for="telefono" style="font-weight: 500; color: #555; margin-bottom: 8px;">Teléfono (opcional)</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text" style="background: transparent;"><i class="fas fa-phone text-muted"></i></span>
+                                            <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Escribe tu teléfono"
+                                                style="padding: 12px 15px; border-radius: 0 8px 8px 0; border: 1px solid #ddd; transition: all 0.3s ease;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group position-relative">
+                                        <label for="asunto" style="font-weight: 500; color: #555; margin-bottom: 8px;">Asunto</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text" style="background: transparent;"><i class="fas fa-tag text-muted"></i></span>
+                                            <input type="text" class="form-control" id="asunto" name="asunto" placeholder="Motivo de contacto" required
+                                                style="padding: 12px 15px; border-radius: 0 8px 8px 0; border: 1px solid #ddd; transition: all 0.3s ease;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group position-relative">
+                                        <label for="mensaje" style="font-weight: 500; color: #555; margin-bottom: 8px;">Mensaje</label>
+                                        <textarea class="form-control" id="mensaje" name="mensaje" rows="5" placeholder="¿En qué podemos ayudarte?" required
+                                            style="padding: 15px; border-radius: 8px; border: 1px solid #ddd; transition: all 0.3s ease;"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-4 text-end">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5" style="border-radius: 50px; box-shadow: 0 4px 15px rgba(255, 68, 68, 0.4); padding: 12px 30px; font-weight: 600; letter-spacing: 0.5px; transition: all 0.3s ease;">
+                                        <i class="fas fa-paper-plane me-2"></i>Enviar Mensaje
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mapa y horarios -->
+    <section class="py-5 bg-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right">
+                    <h3 style="color: #333; font-weight: 700; position: relative; padding-bottom: 15px; margin-bottom: 20px;">
+                        Nuestro horario de atención
+                        <span style="position: absolute; bottom: 0; left: 0; width: 50px; height: 3px; background: var(--primary-color);"></span>
+                    </h3>
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center py-3 border-bottom">
+                            <span style="font-weight: 600; color: #444;">Lunes a Viernes</span>
+                            <span class="badge bg-success px-3 py-2">9:00 - 18:00</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center py-3 border-bottom">
+                            <span style="font-weight: 600; color: #444;">Sábados</span>
+                            <span class="badge bg-success px-3 py-2">10:00 - 14:00</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center py-3">
+                            <span style="font-weight: 600; color: #444;">Domingos y Feriados</span>
+                            <span class="badge bg-danger px-3 py-2">Cerrado</span>
+                        </div>
+                    </div>
+                    <p class="text-muted">Siempre estamos disponibles para atender tus consultas por WhatsApp y redes sociales, incluso fuera del horario de atención habitual.</p>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div style="border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 350px;">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d53709.05546871517!2d-68.87676249060708!3d-32.88349294303752!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x967e093ec45179bf%3A0x205a78f6d20efa3a!2sMendoza%2C%20Capital%2C%20Mendoza!5e0!3m2!1ses-419!2sar!4v1683238876390!5m2!1ses-419!2sar" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Preguntas Frecuentes -->
+    <section class="py-5" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2 style="color: #333; font-weight: 700; position: relative; padding-bottom: 15px; margin-bottom: 20px; display: inline-block;" data-aos="fade-up">
+                        Preguntas Frecuentes
+                        <span style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background: var(--primary-color);"></span>
+                    </h2>
+                    <p class="text-muted mb-5" data-aos="fade-up" data-aos-delay="100">Respuestas a las dudas más comunes de nuestros clientes</p>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="accordion" id="faqAccordion" data-aos="fade-up" data-aos-delay="200">
+                        <!-- Pregunta 1 -->
+                        <div class="accordion-item mb-3" style="border-radius: 10px; overflow: hidden; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                            <h2 class="accordion-header" id="faqHeading1">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1" aria-expanded="true" aria-controls="faqCollapse1" style="padding: 16px 20px; font-weight: 600; color: #444;">
+                                    ¿Cuáles son los métodos de pago aceptados?
+                                </button>
+                            </h2>
+                            <div id="faqCollapse1" class="accordion-collapse collapse show" aria-labelledby="faqHeading1" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body" style="padding: 20px; color: #666;">
+                                    <p>Aceptamos múltiples métodos de pago para tu comodidad:</p>
+                                    <ul>
+                                        <li>Tarjetas de crédito y débito (Visa, Mastercard, American Express)</li>
+                                        <li>Transferencia bancaria</li>
+                                        <li>Mercado Pago</li>
+                                        <li>Efectivo (solo en retiro en tienda)</li>
+                                    </ul>
+                                    <p>Todas nuestras transacciones online están aseguradas con encriptación SSL.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pregunta 2 -->
+                        <div class="accordion-item mb-3" style="border-radius: 10px; overflow: hidden; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                            <h2 class="accordion-header" id="faqHeading2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2" style="padding: 16px 20px; font-weight: 600; color: #444;">
+                                    ¿Cuánto tiempo tarda en llegar mi pedido?
+                                </button>
+                            </h2>
+                            <div id="faqCollapse2" class="accordion-collapse collapse" aria-labelledby="faqHeading2" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body" style="padding: 20px; color: #666;">
+                                    <p>Los tiempos de entrega varían según tu ubicación:</p>
+                                    <ul>
+                                        <li><strong>Ciudad de Mendoza:</strong> 24-48 horas hábiles</li>
+                                        <li><strong>Gran Mendoza:</strong> 2-3 días hábiles</li>
+                                        <li><strong>Resto del país:</strong> 3-7 días hábiles</li>
+                                    </ul>
+                                    <p>Una vez realizado tu pedido, recibirás un código de seguimiento para rastrear tu envío en tiempo real.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pregunta 3 -->
+                        <div class="accordion-item mb-3" style="border-radius: 10px; overflow: hidden; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                            <h2 class="accordion-header" id="faqHeading3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3" style="padding: 16px 20px; font-weight: 600; color: #444;">
+                                    ¿Puedo cambiar o devolver un producto?
+                                </button>
+                            </h2>
+                            <div id="faqCollapse3" class="accordion-collapse collapse" aria-labelledby="faqHeading3" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body" style="padding: 20px; color: #666;">
+                                    <p>Sí, en FullFit nos aseguramos de que estés completamente satisfecho con tu compra:</p>
+                                    <ul>
+                                        <li>Tienes 30 días desde la recepción para solicitar un cambio o devolución</li>
+                                        <li>Los productos deben estar sin uso y en su embalaje original</li>
+                                        <li>En caso de productos defectuosos, cubrimos el costo del envío</li>
+                                    </ul>
+                                    <p>Para iniciar el proceso, simplemente contacta con nuestro equipo de atención al cliente.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pregunta 4 -->
+                        <div class="accordion-item mb-3" style="border-radius: 10px; overflow: hidden; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                            <h2 class="accordion-header" id="faqHeading4">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4" style="padding: 16px 20px; font-weight: 600; color: #444;">
+                                    ¿Ofrecen envíos gratuitos?
+                                </button>
+                            </h2>
+                            <div id="faqCollapse4" class="accordion-collapse collapse" aria-labelledby="faqHeading4" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body" style="padding: 20px; color: #666;">
+                                    <p>¡Sí! Ofrecemos envío gratuito en todos los pedidos superiores a $50. Para pedidos menores, se aplica una tarifa fija de $5 por envío.</p>
+                                    <p>También tenemos la opción de retiro gratuito en nuestra tienda física ubicada en el centro de Mendoza.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <p class="mb-4" data-aos="fade-up" data-aos-delay="300">¿No encontraste la respuesta que buscabas?</p>
+                    <a href="#contact-form" class="btn btn-primary px-4" style="border-radius: 30px; box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);" data-aos="fade-up" data-aos-delay="400">
+                        <i class="fas fa-envelope me-2"></i>Contacta con nosotros
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Mejorado -->
+    <footer class="footer bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <div class="footer-brand d-flex align-items-center mb-3">
+                        <i class="fas fa-dumbbell me-2 fa-2x text-danger"></i>
+                        <h4 class="mb-0">FullFit</h4>
+                    </div>
+                    <p class="mb-3">Tu tienda fitness de confianza con los mejores productos para potenciar tu entrenamiento.</p>
+                    <div class="social-links d-flex">
+                        <a href="#" class="me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-6 mb-4 mb-md-0">
+                    <h5 class="mb-4 footer-title">Navegación</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="../index.html">Inicio</a></li>
+                        <li class="mb-2"><a href="productos.html">Productos</a></li>
+                        <li class="mb-2"><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-6 mb-4 mb-md-0">
+                    <h5 class="mb-4 footer-title">Categorías</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="productos.html?categoria=suplementos">Suplementos</a></li>
+                        <li class="mb-2"><a href="productos.html?categoria=ropa">Ropa Fitness</a></li>
+                        <li class="mb-2"><a href="productos.html?categoria=accesorios">Accesorios</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2025 FullFit. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+                    <!-- Enlaces eliminados -->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Script para animaciones -->
+    <script type="text/javascript">
+        // Inicializar AOS (Animate On Scroll)
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+        });
+    </script>
+    
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido Confirmado - FullFit</title>
+    <!-- Metadatos para SEO -->
+    <meta name="description" content="Tu pedido ha sido confirmado. Gracias por comprar en FullFit, tienda de productos fitness.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/icons/favicon.png">
+    <style>
+        .confirmation-section {
+            background-color: #f8f9fa;
+            padding: 80px 0;
+            min-height: 70vh;
+        }
+        .confirmation-card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+        .success-checkmark {
+            width: 100px;
+            height: 100px;
+            background-color: #e7f9f7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 40px;
+            color: #28a745;
+        }
+        .order-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        .order-summary {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+        .summary-total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding-top: 15px;
+            margin-top: 15px;
+            border-top: 2px solid #ddd;
+        }
+        .estimated-delivery {
+            background-color: #fff8e5;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            border-left: 4px solid #ffc107;
+        }
+        .tracking-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            position: relative;
+        }
+        .tracking-steps::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #ddd;
+            z-index: 1;
+        }
+        .step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 25%;
+        }
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 20px;
+            color: #777;
+            position: relative;
+            background-color: white;
+            border: 2px solid #ddd;
+        }
+        .step.active .step-icon {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        .step.completed .step-icon {
+            background-color: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+        .step-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #777;
+        }
+        .step.active .step-label {
+            color: var(--primary-color);
+        }
+        .step.completed .step-label {
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <i class="fas fa-dumbbell me-2"></i>
+                <span>FullFit</span>
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="productos.html">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacto.html">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="#" id="cartButton">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cartCount" class="cart-badge badge rounded-pill bg-danger">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección de Confirmación -->
+    <section class="confirmation-section py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="confirmation-card text-center mb-4">
+                        <div class="success-checkmark">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <h1 class="mb-3 fw-bold">¡Pedido Confirmado!</h1>
+                        <p class="lead mb-0">Tu pedido ha sido recibido y está siendo procesado.</p>
+                        <p class="mb-4">Hemos enviado los detalles de la compra a tu correo electrónico.</p>
+                        
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="../index.html" class="btn btn-outline-secondary">
+                                <i class="fas fa-home me-2"></i>Volver al Inicio
+                            </a>
+                            <a href="productos.html" class="btn btn-primary">
+                                <i class="fas fa-shopping-bag me-2"></i>Seguir Comprando
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="confirmation-card">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h5 class="mb-3 fw-bold">Número de Pedido</h5>
+                                <p class="mb-0" id="order-number">#000000</p>
+                            </div>
+                            <div class="col-sm-6 text-sm-end">
+                                <h5 class="mb-3 fw-bold">Fecha del Pedido</h5>
+                                <p class="mb-0" id="order-date">00/00/0000</p>
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <!-- Seguimiento de pedido -->
+                        <h5 class="mb-3 fw-bold">Estado del Pedido</h5>
+                        <div class="tracking-steps">
+                            <div class="step completed">
+                                <div class="step-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="step-label">Confirmado</div>
+                            </div>
+                            <div class="step active">
+                                <div class="step-icon">
+                                    <i class="fas fa-box"></i>
+                                </div>
+                                <div class="step-label">Procesando</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-icon">
+                                    <i class="fas fa-truck"></i>
+                                </div>
+                                <div class="step-label">Enviado</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-icon">
+                                    <i class="fas fa-home"></i>
+                                </div>
+                                <div class="step-label">Entregado</div>
+                            </div>
+                        </div>
+                        
+                        <div class="estimated-delivery">
+                            <i class="fas fa-calendar-alt me-3 fa-2x text-warning"></i>
+                            <div>
+                                <h6 class="mb-1 fw-bold">Entrega Estimada</h6>
+                                <p class="mb-0" id="delivery-date">En 3-5 días hábiles</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="confirmation-card">
+                        <h5 class="mb-4 fw-bold">Detalles del Pedido</h5>
+                        
+                        <!-- Productos comprados -->
+                        <div id="order-items" class="mb-4">
+                            <!-- Los items se generarán con JavaScript -->
+                        </div>
+                        
+                        <!-- Resumen de costos -->
+                        <div class="order-summary">
+                            <div class="summary-row">
+                                <span>Subtotal</span>
+                                <span id="order-subtotal">$0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Envío</span>
+                                <span id="order-shipping">$0.00</span>
+                            </div>
+                            <div class="summary-row" id="discount-row">
+                                <span>Descuento</span>
+                                <span id="order-discount">-$0.00</span>
+                            </div>
+                            <div class="summary-row summary-total">
+                                <span>Total</span>
+                                <span id="order-total">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="confirmation-card h-100">
+                                <h5 class="mb-3 fw-bold">Información de Envío</h5>
+                                <p class="mb-1" id="shipping-name">Nombre del Cliente</p>
+                                <p class="mb-1" id="shipping-address">Dirección completa</p>
+                                <p class="mb-1" id="shipping-city">Ciudad, Provincia, CP</p>
+                                <p class="mb-3" id="shipping-phone">Teléfono</p>
+                                <p class="mb-0"><strong>Método de envío:</strong> <span id="shipping-method">Estándar</span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="confirmation-card h-100">
+                                <h5 class="mb-3 fw-bold">Información de Pago</h5>
+                                <p class="mb-1"><strong>Método de pago:</strong> <span id="payment-method">Método de pago</span></p>
+                                <p class="mb-0"><strong>Estado:</strong> <span class="badge bg-success">Aprobado</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Reducido -->
+    <footer class="footer bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-3">
+                        <i class="fas fa-dumbbell me-2 text-danger"></i>
+                        <h5 class="mb-0">FullFit</h5>
+                    </div>
+                    <p class="mb-0">&copy; 2025 FullFit. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+                    <p class="mb-0">¿Necesitas ayuda con tu pedido? <a href="contacto.html" class="text-danger">Contáctanos</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Recuperar datos del pedido
+            const orderData = JSON.parse(localStorage.getItem('orderData')) || null;
+            
+            if (!orderData) {
+                // Si no hay datos del pedido, redirigir a productos
+                window.location.href = 'productos.html';
+                return;
+            }
+            
+            // Generar número de pedido aleatorio
+            const orderNumber = `#${Math.floor(100000 + Math.random() * 900000)}`;
+            document.getElementById('order-number').textContent = orderNumber;
+            
+            // Establecer fecha actual
+            const now = new Date();
+            const formattedDate = now.toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+            document.getElementById('order-date').textContent = formattedDate;
+            
+            // Calcular fecha estimada de entrega (5 días hábiles desde hoy)
+            const deliveryDate = new Date(now);
+            deliveryDate.setDate(deliveryDate.getDate() + 5);
+            const formattedDeliveryDate = deliveryDate.toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+            
+            // Ajustar fecha de entrega según área
+            let deliveryText = '';
+            switch(orderData.shippingInfo.area) {
+                case 'capital':
+                    deliveryText = `Entre ${formattedDate} y ${formattedDeliveryDate} (1-2 días)`;
+                    break;
+                case 'gran-mendoza':
+                    deliveryText = `Entre ${formattedDeliveryDate} (2-3 días)`;
+                    break;
+                case 'provincia':
+                    const extendedDate = new Date(deliveryDate);
+                    extendedDate.setDate(extendedDate.getDate() + 2);
+                    const formattedExtendedDate = extendedDate.toLocaleDateString('es-ES', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    });
+                    deliveryText = `Entre ${formattedDeliveryDate} y ${formattedExtendedDate} (4-7 días)`;
+                    break;
+                case 'pais':
+                    const longExtendedDate = new Date(deliveryDate);
+                    longExtendedDate.setDate(longExtendedDate.getDate() + 5);
+                    const formattedLongExtendedDate = longExtendedDate.toLocaleDateString('es-ES', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    });
+                    deliveryText = `Entre ${formattedDeliveryDate} y ${formattedLongExtendedDate} (5-10 días)`;
+                    break;
+                default:
+                    deliveryText = `Aproximadamente el ${formattedDeliveryDate}`;
+            }
+            document.getElementById('delivery-date').textContent = deliveryText;
+            
+            // Mostrar información de envío
+            document.getElementById('shipping-name').textContent = orderData.customerInfo.nombre;
+            document.getElementById('shipping-address').textContent = `${orderData.shippingInfo.calle} ${orderData.shippingInfo.numero}, ${orderData.shippingInfo.piso || ''}`;
+            document.getElementById('shipping-city').textContent = `${orderData.shippingInfo.localidad}, ${orderData.shippingInfo.provincia}, CP: ${orderData.shippingInfo.codigo_postal}`;
+            document.getElementById('shipping-phone').textContent = `Tel: ${orderData.customerInfo.telefono}`;
+            
+            // Mostrar método de envío basado en área
+            let shippingMethodText = '';
+            switch(orderData.shippingInfo.area) {
+                case 'capital':
+                    shippingMethodText = 'Envío Express a Domicilio (Ciudad de Mendoza)';
+                    break;
+                case 'gran-mendoza':
+                    shippingMethodText = 'Envío Estándar (Gran Mendoza)';
+                    break;
+                case 'provincia':
+                    shippingMethodText = 'Envío Provincial (Resto de Mendoza)';
+                    break;
+                case 'pais':
+                    shippingMethodText = 'Envío Nacional';
+                    break;
+                default:
+                    shippingMethodText = 'Envío Estándar';
+            }
+            document.getElementById('shipping-method').textContent = shippingMethodText;
+            
+            // Mostrar método de pago
+            let paymentMethodText = '';
+            switch(orderData.paymentMethod) {
+                case 'mercadopago':
+                    paymentMethodText = 'Mercado Pago';
+                    break;
+                case 'transferencia':
+                    paymentMethodText = 'Transferencia Bancaria (10% descuento)';
+                    break;
+                case 'efectivo':
+                    paymentMethodText = 'Efectivo (retiro en tienda)';
+                    break;
+                default:
+                    paymentMethodText = 'Pago online';
+            }
+            document.getElementById('payment-method').textContent = paymentMethodText;
+            
+            // Mostrar productos comprados
+            const orderItems = document.getElementById('order-items');
+            let itemsHtml = '';
+            
+            orderData.orderSummary.items.forEach(item => {
+                itemsHtml += `
+                    <div class="order-item d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0">${item.name}</h6>
+                            <small class="text-muted">Cantidad: ${item.quantity} x $${item.price.toFixed(2)}</small>
+                        </div>
+                        <div class="ms-auto">
+                            <span class="fw-bold">$${(item.price * item.quantity).toFixed(2)}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            orderItems.innerHTML = itemsHtml;
+            
+            // Mostrar resumen de costos
+            document.getElementById('order-subtotal').textContent = `$${orderData.orderSummary.subtotal.toFixed(2)}`;
+            document.getElementById('order-shipping').textContent = orderData.orderSummary.shipping === 0 ? 'Gratis' : `$${orderData.orderSummary.shipping.toFixed(2)}`;
+            
+            // Mostrar u ocultar fila de descuento
+            if (orderData.orderSummary.discount > 0) {
+                document.getElementById('order-discount').textContent = `-$${orderData.orderSummary.discount.toFixed(2)}`;
+                document.getElementById('discount-row').style.display = 'flex';
+            } else {
+                document.getElementById('discount-row').style.display = 'none';
+            }
+            
+            // Mostrar total
+            document.getElementById('order-total').textContent = `$${orderData.orderSummary.total.toFixed(2)}`;
+        });
+    </script>
+</body>
+</html> 
