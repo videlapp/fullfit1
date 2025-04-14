@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalizar Compra - FullFit</title>
+    <!-- Metadatos para SEO -->
+    <meta name="description" content="Finaliza tu compra de productos fitness FullFit. Completa tus datos para recibir tu pedido en casa.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/icons/favicon.png">
+    <style>
+        .checkout-section {
+            background-color: #f8f9fa;
+            padding: 60px 0;
+        }
+        .checkout-card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .checkout-title {
+            color: #333;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+        }
+        .checkout-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        .cart-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .checkout-summary {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+        .summary-total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding-top: 15px;
+            margin-top: 15px;
+            border-top: 2px solid #ddd;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 8px;
+        }
+        .form-control, .form-select {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+        .payment-method-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .payment-method-card:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(255, 68, 68, 0.03);
+        }
+        .payment-method-card.active {
+            border-color: var(--primary-color);
+            background-color: rgba(255, 68, 68, 0.05);
+        }
+        .cart-product-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .location-selector {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        .location-option {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .location-option:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+        .location-option:last-child {
+            border-radius: 0 8px 8px 0;
+        }
+        .location-option.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        .btn-checkout {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+            width: 100%;
+        }
+        .btn-checkout:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
+            background-color: #e04141;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <i class="fas fa-dumbbell me-2"></i>
+                <span>FullFit</span>
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="productos.html">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacto.html">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="#" id="cartButton">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cartCount" class="cart-badge badge rounded-pill bg-danger">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header de Checkout -->
+    <div class="py-4 bg-dark text-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="mb-0 fw-bold">Finalizar Compra</h1>
+                </div>
+                <div class="col-md-6">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-md-end mb-0">
+                            <li class="breadcrumb-item"><a href="../index.html" class="text-white text-decoration-none">Inicio</a></li>
+                            <li class="breadcrumb-item text-white-50">Finalizar Compra</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de Checkout -->
+    <section class="checkout-section py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Formulario de datos -->
+                <div class="col-lg-8">
+                    <form id="checkout-form">
+                        <!-- Datos personales -->
+                        <div class="checkout-card mb-4">
+                            <h3 class="checkout-title">Datos Personales</h3>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="nombre" class="form-label">Nombre completo</label>
+                                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="telefono" class="form-label">Teléfono</label>
+                                    <input type="tel" class="form-control" id="telefono" name="telefono" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="dni" class="form-label">DNI / Documento</label>
+                                    <input type="text" class="form-control" id="dni" name="dni" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Datos de envío -->
+                        <div class="checkout-card mb-4">
+                            <h3 class="checkout-title">Datos de Envío</h3>
+                            
+                            <!-- Sistema de cálculo por Maps -->
+                            <div class="maps-shipping-calculator mb-4">
+                                <h5 class="mb-3">Calcular costo de envío por distancia</h5>
+                                <p class="text-muted small mb-3">El costo de envío se calcula según la distancia desde nuestra tienda principal.</p>
+                                
+                                <div class="row g-3">
+                                    <div class="col-md-12">
+                                        <label for="shipping-address" class="form-label">Ingresa tu dirección completa</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="shipping-address" placeholder="Ej: Calle San Martín 100, Mendoza, Argentina">
+                                            <button class="btn btn-primary" type="button" id="calculate-shipping">Calcular</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div id="map-container" class="mt-3" style="height: 250px; border-radius: 8px; display: none;"></div>
+                                
+                                <div id="shipping-result" class="mt-3 p-3 bg-light rounded" style="display: none;">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <p class="mb-1"><strong>Distancia:</strong> <span id="distance-result">0 km</span></p>
+                                            <p class="mb-0"><strong>Costo de envío:</strong> <span id="shipping-cost-result">$0</span></p>
+                                        </div>
+                                        <button class="btn btn-sm btn-success" id="apply-calculated-shipping">Aplicar este costo</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Selector de ubicación (original) -->
+                            <h5 class="mb-3">O selecciona tu zona de envío predeterminada</h5>
+                            <div class="location-selector mb-4">
+                                <div class="location-option active" data-shipping="0" data-area="capital">
+                                    <i class="fas fa-map-marker-alt mb-2"></i>
+                                    <div>Ciudad de Mendoza</div>
+                                    <small class="text-success">Gratis</small>
+                                </div>
+                                <div class="location-option" data-shipping="500" data-area="gran-mendoza">
+                                    <i class="fas fa-map-marked-alt mb-2"></i>
+                                    <div>Gran Mendoza</div>
+                                    <small>$500</small>
+                                </div>
+                                <div class="location-option" data-shipping="1200" data-area="provincia">
+                                    <i class="fas fa-truck mb-2"></i>
+                                    <div>Resto de Mendoza</div>
+                                    <small>$1200</small>
+                                </div>
+                                <div class="location-option" data-shipping="2500" data-area="pais">
+                                    <i class="fas fa-globe-americas mb-2"></i>
+                                    <div>Resto del país</div>
+                                    <small>$2500</small>
+                                </div>
+                            </div>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="calle" class="form-label">Calle</label>
+                                    <input type="text" class="form-control" id="calle" name="calle" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="numero" class="form-label">Número</label>
+                                    <input type="text" class="form-control" id="numero" name="numero" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="piso" class="form-label">Piso/Dpto (opcional)</label>
+                                    <input type="text" class="form-control" id="piso" name="piso">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="localidad" class="form-label">Localidad</label>
+                                    <input type="text" class="form-control" id="localidad" name="localidad" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="provincia" class="form-label">Provincia</label>
+                                    <select class="form-select" id="provincia" name="provincia" required>
+                                        <option value="" selected disabled>Seleccionar...</option>
+                                        <option value="Mendoza">Mendoza</option>
+                                        <option value="Buenos Aires">Buenos Aires</option>
+                                        <option value="Córdoba">Córdoba</option>
+                                        <option value="Santa Fe">Santa Fe</option>
+                                        <option value="San Juan">San Juan</option>
+                                        <option value="San Luis">San Luis</option>
+                                        <!-- Añadir el resto de provincias -->
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="codigo_postal" class="form-label">Código Postal</label>
+                                    <input type="text" class="form-control" id="codigo_postal" name="codigo_postal" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="referencias" class="form-label">Referencias (opcional)</label>
+                                    <input type="text" class="form-control" id="referencias" name="referencias" placeholder="Ej: Casa verde, portón negro...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Método de pago -->
+                        <div class="checkout-card">
+                            <h3 class="checkout-title">Método de Pago</h3>
+                            <div class="mb-4">
+                                <div class="payment-method-card active">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="metodo_pago" id="mercadopago" value="mercadopago" checked>
+                                        <label class="form-check-label d-flex align-items-center" for="mercadopago">
+                                            <i class="fas fa-credit-card me-2 text-primary"></i>
+                                            <span class="me-auto">Mercado Pago (Tarjeta, transferencia, efectivo)</span>
+                                            <img src="https://www.mercadopago.com/favicon.ico" alt="Mercado Pago" height="25">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="payment-method-card">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="metodo_pago" id="transferencia" value="transferencia">
+                                        <label class="form-check-label d-flex align-items-center" for="transferencia">
+                                            <i class="fas fa-university me-2 text-success"></i>
+                                            <span>Transferencia Bancaria (10% de descuento)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="payment-method-card">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="metodo_pago" id="efectivo" value="efectivo">
+                                        <label class="form-check-label d-flex align-items-center" for="efectivo">
+                                            <i class="fas fa-money-bill-wave me-2 text-success"></i>
+                                            <span>Efectivo (solo retiro en tienda)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="terminos" required>
+                                <label class="form-check-label" for="terminos">
+                                    Acepto los <a href="#" class="text-danger">términos y condiciones</a> y las <a href="#" class="text-danger">políticas de privacidad</a>
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Resumen del pedido -->
+                <div class="col-lg-4">
+                    <div class="checkout-card">
+                        <h3 class="checkout-title">Resumen del Pedido</h3>
+                        
+                        <!-- Lista de productos en el carrito -->
+                        <div id="checkout-items" class="mb-4">
+                            <!-- Los items se cargarán con JavaScript -->
+                        </div>
+                        
+                        <!-- Resumen de costos -->
+                        <div class="checkout-summary">
+                            <div class="summary-item">
+                                <span>Subtotal</span>
+                                <span id="checkout-subtotal">$0.00</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Envío</span>
+                                <span id="checkout-shipping">$0.00</span>
+                            </div>
+                            <div class="summary-item" id="discount-row" style="display: none;">
+                                <span>Descuento</span>
+                                <span id="checkout-discount">-$0.00</span>
+                            </div>
+                            <div class="summary-item summary-total">
+                                <span>Total</span>
+                                <span id="checkout-total">$0.00</span>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" form="checkout-form" class="btn btn-checkout mt-4">
+                            <i class="fas fa-lock me-2"></i>Confirmar Pedido
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Reducido -->
+    <footer class="footer bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-3">
+                        <i class="fas fa-dumbbell me-2 text-danger"></i>
+                        <h5 class="mb-0">FullFit</h5>
+                    </div>
+                    <p class="mb-0">&copy; 2025 FullFit. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 d-flex justify-content-center justify-content-md-end align-items-center">
+                    <img src="https://www.mercadopago.com/favicon.ico" alt="Mercado Pago" height="30" class="me-3">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/1280px-Visa_Inc._logo.svg.png" alt="Visa" height="20" class="me-3">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Mastercard" height="25">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- NOTA: Para activar Google Maps, debes reemplazar YOUR_API_KEY con una clave válida de Google Maps JavaScript API.
+         Puedes obtener una en: https://developers.google.com/maps/documentation/javascript/get-api-key -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+    <script>
+        // Punto de origen (Ubicación de tu tienda principal)
+        const storeLocation = {
+            lat: -32.889267, // Latitud de Mendoza, Argentina (cambia esto por tu ubicación)
+            lng: -68.845839  // Longitud de Mendoza, Argentina
+        };
+        
+        // Tasa de costo por kilómetro (pesos por km)
+        const COST_PER_KM = 50;
+        // Costo mínimo de envío
+        const MIN_SHIPPING_COST = 500;
+        // Distancia máxima para envíos (en kilómetros)
+        const MAX_SHIPPING_DISTANCE = 200;
+        
+        let map, directionsService, directionsRenderer;
+        let calculatedShippingCost = 0;
+        
+        // Inicializar el mapa y los servicios de Google
+        function initMap() {
+            // Crear el servicio de direcciones
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer();
+            
+            // Crear el mapa y centrarlo en la ubicación de la tienda
+            map = new google.maps.Map(document.getElementById('map-container'), {
+                center: storeLocation,
+                zoom: 12
+            });
+            
+            // Configurar el renderizador de direcciones
+            directionsRenderer.setMap(map);
+            
+            // Crear marcador para la tienda
+            new google.maps.Marker({
+                position: storeLocation,
+                map: map,
+                title: 'FullFit - Tienda Principal',
+                icon: {
+                    url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                }
+            });
+            
+            // Inicializar autocompletado de direcciones
+            const input = document.getElementById('shipping-address');
+            const autocomplete = new google.maps.places.Autocomplete(input);
+        }
+        
+        // Calcular la ruta y la distancia
+        function calculateRoute() {
+            const destinationAddress = document.getElementById('shipping-address').value;
+            
+            if (!destinationAddress) {
+                alert('Por favor, ingresa una dirección válida');
+                return;
+            }
+            
+            // Mostrar el mapa
+            document.getElementById('map-container').style.display = 'block';
+            
+            // Solicitar la ruta
+            directionsService.route({
+                origin: new google.maps.LatLng(storeLocation.lat, storeLocation.lng),
+                destination: destinationAddress,
+                travelMode: google.maps.TravelMode.DRIVING
+            }, function(response, status) {
+                if (status === 'OK') {
+                    // Mostrar la ruta en el mapa
+                    directionsRenderer.setDirections(response);
+                    
+                    // Obtener la distancia en kilómetros
+                    const route = response.routes[0];
+                    const distanceInMeters = route.legs[0].distance.value;
+                    const distanceInKm = distanceInMeters / 1000;
+                    
+                    // Calcular el costo de envío
+                    calculatedShippingCost = Math.max(
+                        MIN_SHIPPING_COST,
+                        Math.round(distanceInKm * COST_PER_KM / 10) * 10 // Redondear a decenas
+                    );
+                    
+                    // Verificar si está dentro del radio de envío
+                    if (distanceInKm > MAX_SHIPPING_DISTANCE) {
+                        alert(`Lo sentimos, no realizamos envíos a más de ${MAX_SHIPPING_DISTANCE} km de nuestra tienda principal.`);
+                        return;
+                    }
+                    
+                    // Mostrar resultados
+                    document.getElementById('distance-result').textContent = `${distanceInKm.toFixed(1)} km`;
+                    document.getElementById('shipping-cost-result').textContent = `$${calculatedShippingCost}`;
+                    document.getElementById('shipping-result').style.display = 'block';
+                } else {
+                    alert('No pudimos calcular la ruta. Por favor, verifica la dirección.');
+                }
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar el sistema de mapas
+            if (typeof google !== 'undefined') {
+                initMap();
+            }
+            
+            // Listener para el botón de calcular
+            document.getElementById('calculate-shipping').addEventListener('click', calculateRoute);
+            
+            // Listener para aplicar el costo calculado
+            document.getElementById('apply-calculated-shipping').addEventListener('click', function() {
+                // Deseleccionar todas las opciones predefinidas
+                document.querySelectorAll('.location-option').forEach(opt => opt.classList.remove('active'));
+                
+                // Actualizar el costo de envío
+                shipping = calculatedShippingCost;
+                
+                // Actualizar el resumen
+                updateSummary();
+                
+                // Mensaje de confirmación
+                alert(`Costo de envío de $${calculatedShippingCost} aplicado correctamente.`);
+            });
+            
+            // Obtener datos del carrito (intentar ambas formas para compatibilidad)
+            let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            
+            // Si cartItems está vacío, intentar obtener de 'cart'
+            if (cartItems.length === 0) {
+                const cartData = JSON.parse(localStorage.getItem('cart')) || { items: [], total: 0 };
+                cartItems = cartData.items;
+                // Sincronizar para futuras referencias
+                if (cartItems.length > 0) {
+                    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                }
+            }
+            
+            let subtotal = 0;
+            let shipping = 0; // Inicializar el costo de envío
+            let discount = 0;
+            
+            // Elementos del DOM
+            const checkoutItemsContainer = document.getElementById('checkout-items');
+            const subtotalElement = document.getElementById('checkout-subtotal');
+            const shippingElement = document.getElementById('checkout-shipping');
+            const discountElement = document.getElementById('checkout-discount');
+            const totalElement = document.getElementById('checkout-total');
+            const discountRow = document.getElementById('discount-row');
+            
+            // Cargar productos del carrito
+            if (cartItems.length === 0) {
+                checkoutItemsContainer.innerHTML = '<p class="text-center py-3">No hay productos en el carrito</p>';
+                // Si no hay productos, redirigir a productos
+                window.location.href = '../index.html';
+            } else {
+                let itemsHtml = '';
+                
+                cartItems.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    subtotal += itemTotal;
+                    
+                    itemsHtml += `
+                        <div class="cart-item d-flex align-items-center">
+                            <img src="${item.image}" alt="${item.name}" class="cart-product-image me-3">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0">${item.name}</h6>
+                                <small class="text-muted">Cantidad: ${item.quantity}</small>
+                            </div>
+                            <div class="ms-auto">
+                                <span class="fw-bold">$${itemTotal.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                checkoutItemsContainer.innerHTML = itemsHtml;
+            }
+            
+            // Actualizar resumen de costos
+            function updateSummary() {
+                subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+                shippingElement.textContent = shipping === 0 ? 'Gratis' : `$${shipping.toFixed(2)}`;
+                
+                // Calcular descuento basado en método de pago
+                const paymentMethod = document.querySelector('input[name="metodo_pago"]:checked').value;
+                if (paymentMethod === 'transferencia') {
+                    discount = subtotal * 0.1; // 10% de descuento
+                    discountElement.textContent = `-$${discount.toFixed(2)}`;
+                    discountRow.style.display = 'flex';
+                } else {
+                    discount = 0;
+                    discountRow.style.display = 'none';
+                }
+                
+                // Calcular total
+                const total = subtotal + shipping - discount;
+                totalElement.textContent = `$${total.toFixed(2)}`;
+            }
+            
+            // Manejar cambios en opciones de ubicación
+            const locationOptions = document.querySelectorAll('.location-option');
+            locationOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Quitar clase activa de todas las opciones
+                    locationOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Agregar clase activa a la opción seleccionada
+                    this.classList.add('active');
+                    
+                    // Actualizar costo de envío
+                    shipping = parseFloat(this.getAttribute('data-shipping'));
+                    
+                    // Actualizar resumen
+                    updateSummary();
+                });
+            });
+            
+            // Manejar cambios en método de pago
+            const paymentMethods = document.querySelectorAll('.payment-method-card');
+            paymentMethods.forEach(method => {
+                method.addEventListener('click', function() {
+                    // Marcar el radio button
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    // Actualizar clases
+                    paymentMethods.forEach(m => m.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Actualizar resumen con posible descuento
+                    updateSummary();
+                });
+            });
+            
+            // Envío del formulario
+            const checkoutForm = document.getElementById('checkout-form');
+            checkoutForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validación básica del formulario
+                if (checkoutForm.checkValidity()) {
+                    // Obtener datos del formulario
+                    const formData = new FormData(checkoutForm);
+                    
+                    // Obtener datos adicionales para el pedido
+                    const activeLocation = document.querySelector('.location-option.active');
+                    const orderData = {
+                        customerInfo: {
+                            nombre: formData.get('nombre'),
+                            email: formData.get('email'),
+                            telefono: formData.get('telefono'),
+                            dni: formData.get('dni')
+                        },
+                        shippingInfo: {
+                            calle: formData.get('calle'),
+                            numero: formData.get('numero'),
+                            piso: formData.get('piso'),
+                            localidad: formData.get('localidad'),
+                            provincia: formData.get('provincia'),
+                            codigo_postal: formData.get('codigo_postal'),
+                            referencias: formData.get('referencias'),
+                            area: activeLocation.getAttribute('data-area')
+                        },
+                        paymentMethod: formData.get('metodo_pago'),
+                        orderSummary: {
+                            items: cartItems,
+                            subtotal: subtotal,
+                            shipping: shipping,
+                            discount: discount,
+                            total: subtotal + shipping - discount
+                        }
+                    };
+                    
+                    // Guardar datos del pedido (en un entorno real, esto se enviaría al servidor)
+                    localStorage.setItem('orderData', JSON.stringify(orderData));
+                    
+                    // Enviar datos al servidor (simulado)
+                    alert('¡Pedido confirmado! Serás redirigido a la página de confirmación.');
+                    
+                    // Limpiar carrito tras completar la compra (limpiar ambas claves)
+                    localStorage.removeItem('cartItems');
+                    localStorage.removeItem('cart');
+                    
+                    // Redirigir a página de confirmación (crear esta página)
+                    window.location.href = 'confirmacion.html';
+                } else {
+                    // Activar validaciones visuales de Bootstrap
+                    e.stopPropagation();
+                    checkoutForm.classList.add('was-validated');
+                }
+            });
+            
+            // Inicialización del resumen
+            updateSummary();
+        });
+    </script>
+</body>
+</html> 

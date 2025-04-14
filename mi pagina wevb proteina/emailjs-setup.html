@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Configuración de EmailJS - FullFit</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .guide-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+        h1, h2, h3 {
+            font-weight: 700;
+            color: #333;
+        }
+        .step {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .step:last-child {
+            border-bottom: none;
+        }
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #ff4444;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .alert-custom {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 4px;
+            color: #e83e8c;
+        }
+        .code-block {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="guide-container">
+        <h1 class="text-center mb-5">Configuración de EmailJS para el Formulario de Contacto</h1>
+        
+        <div class="alert alert-info" role="alert">
+            <i class="fas fa-info-circle me-2"></i> Esta guía te ayudará a configurar EmailJS para que los mensajes del formulario de contacto lleguen directamente a tu correo electrónico sin necesidad de verificación.
+        </div>
+        
+        <div class="step">
+            <h2><span class="step-number">1</span> Crear una cuenta en EmailJS</h2>
+            <p>Lo primero que necesitas es crear una cuenta gratuita en EmailJS:</p>
+            <ol>
+                <li>Ve a <a href="https://www.emailjs.com/" target="_blank">https://www.emailjs.com/</a></li>
+                <li>Haz clic en "Sign Up Free" y completa el registro</li>
+                <li>Confirma tu cuenta a través del correo electrónico que te enviaron</li>
+            </ol>
+            <div class="alert-custom">
+                <strong>Nota:</strong> El plan gratuito de EmailJS permite enviar hasta 200 correos electrónicos por mes, lo que suele ser suficiente para sitios web pequeños o medianos.
+            </div>
+        </div>
+        
+        <div class="step">
+            <h2><span class="step-number">2</span> Crear un servicio de correo electrónico</h2>
+            <p>Después de iniciar sesión, necesitas configurar un servicio de correo:</p>
+            <ol>
+                <li>En tu dashboard, ve a la sección "Email Services"</li>
+                <li>Haz clic en "Add New Service"</li>
+                <li>Selecciona tu proveedor de correo electrónico (Gmail, Outlook, etc.)</li>
+                <li>Sigue las instrucciones para conectar tu cuenta de correo</li>
+                <li>Asigna un nombre al servicio (por ejemplo: "FullFit-Contact")</li>
+                <li>Guarda el <strong>Service ID</strong> que se genera (por ejemplo: "service_abc123")</li>
+            </ol>
+            <div class="alert-custom">
+                <strong>Importante:</strong> Si usas Gmail, es posible que debas activar el acceso de aplicaciones menos seguras o usar contraseñas de aplicación.
+            </div>
+        </div>
+        
+        <div class="step">
+            <h2><span class="step-number">3</span> Crear una plantilla de correo</h2>
+            <p>Ahora necesitas crear una plantilla para el formato del correo electrónico:</p>
+            <ol>
+                <li>Ve a la sección "Email Templates"</li>
+                <li>Haz clic en "Create New Template"</li>
+                <li>Diseña tu plantilla con los campos que deseas incluir</li>
+                <li>Usa las siguientes variables en tu plantilla (deben coincidir con las que usamos en el código):</li>
+            </ol>
+            <div class="code-block">
+From name: {{from_name}}
+From email: {{from_email}}
+Phone: {{phone}}
+Subject: {{subject}}
+Message: {{message}}</div>
+            <li>Asigna un nombre a la plantilla (por ejemplo: "FullFit-Contact-Form")</li>
+            <li>Guarda el <strong>Template ID</strong> que se genera (por ejemplo: "template_xyz789")</li>
+        </div>
+        
+        <div class="step">
+            <h2><span class="step-number">4</span> Obtener tu clave pública (Public Key)</h2>
+            <p>Por último, necesitas tu clave pública:</p>
+            <ol>
+                <li>Ve a la sección "Account" > "API Keys"</li>
+                <li>Copia tu <strong>Public Key</strong> (por ejemplo: "user_abc123xyz")</li>
+            </ol>
+        </div>
+        
+        <div class="step">
+            <h2><span class="step-number">5</span> Actualizar el código del formulario</h2>
+            <p>Con toda la información obtenida, debes actualizar el archivo <code>pages/contacto.html</code> con tus datos:</p>
+            <ol>
+                <li>Localiza la sección de script de EmailJS</li>
+                <li>Reemplaza <code>"your_public_key"</code> con tu Public Key</li>
+                <li>Reemplaza <code>"your_service_id"</code> con tu Service ID</li>
+                <li>Reemplaza <code>"your_template_id"</code> con tu Template ID</li>
+            </ol>
+            <div class="code-block">
+// Inicializar EmailJS con tu clave pública
+emailjs.init("TU_PUBLIC_KEY");
+
+// ...
+
+// En la función de envío
+emailjs.send('TU_SERVICE_ID', 'TU_TEMPLATE_ID', templateParams)</div>
+        </div>
+        
+        <div class="alert alert-success" role="alert">
+            <i class="fas fa-check-circle me-2"></i> ¡Listo! Ahora los mensajes del formulario de contacto llegarán directamente a tu correo electrónico sin necesidad de verificación cada vez.
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="pages/contacto.html" class="btn btn-primary">
+                <i class="fas fa-arrow-left me-2"></i>Volver a la página de contacto
+            </a>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
